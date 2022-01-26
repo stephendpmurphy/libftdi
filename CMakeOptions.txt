@@ -1,3 +1,4 @@
+option ( SHAREDLIBS "Build shared libraries" ON )
 option ( STATICLIBS "Build static libraries" ON )
 option ( BUILD_TESTS "Build unit tests with Boost Unit Test framework" OFF )
 option ( DOCUMENTATION "Generate API documentation with Doxygen" OFF )

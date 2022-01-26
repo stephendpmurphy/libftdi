@@ -5,7 +5,7 @@ set(MINOR_VERSION 5)
 set(PACKAGE libftdi1)
 set(VERSION_STRING ${MAJOR_VERSION}.${MINOR_VERSION})
 set(VERSION ${VERSION_STRING})
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # CMake
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
@@ -50,7 +50,7 @@ set(CPACK_COMPONENT_SHAREDLIBS_GROUP "Development")
 set(CPACK_COMPONENT_STATICLIBS_GROUP "Development")
 set(CPACK_COMPONENT_HEADERS_GROUP    "Development")
 
-# guess LIB_SUFFIX, don't take debian multiarch into account 
+# guess LIB_SUFFIX, don't take debian multiarch into account
 if ( NOT DEFINED LIB_SUFFIX )
   if( CMAKE_SYSTEM_NAME MATCHES "Linux"
       AND NOT CMAKE_CROSSCOMPILING
@@ -166,8 +166,8 @@ if(${WIN32})
    set(libdir      ${CMAKE_INSTALL_PREFIX}/bin)
 endif(${WIN32})
 
-configure_file(${CMAKE_SOURCE_DIR}/libftdi1.pc.in ${CMAKE_BINARY_DIR}/libftdi1.pc @ONLY)
-configure_file(${CMAKE_SOURCE_DIR}/libftdipp1.pc.in ${CMAKE_BINARY_DIR}/libftdipp1.pc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libftdi1.pc.in ${CMAKE_BINARY_DIR}/libftdi1.pc @ONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/libftdipp1.pc.in ${CMAKE_BINARY_DIR}/libftdipp1.pc @ONLY)
 install(FILES ${CMAKE_BINARY_DIR}/libftdi1.pc ${CMAKE_BINARY_DIR}/libftdipp1.pc
         DESTINATION lib${LIB_SUFFIX}/pkgconfig)
 
@@ -203,7 +203,7 @@ set ( LIBFTDI_VERSION_MINOR ${MINOR_VERSION} )
 
 set ( LIBFTDI_USE_FILE ${CMAKE_INSTALL_PREFIX}/${LIBFTDI_CMAKE_CONFIG_DIR}/UseLibFTDI1.cmake )
 
-if(CMAKE_VERSION VERSION_LESS 2.8.8) 
+if(CMAKE_VERSION VERSION_LESS 2.8.8)
   configure_file ( cmake/LibFTDI1Config.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake @ONLY )
   configure_file ( cmake/LibFTDI1ConfigVersion.cmake.in ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1ConfigVersion.cmake @ONLY )
 else ()
@@ -222,14 +222,14 @@ else ()
     NO_CHECK_REQUIRED_COMPONENTS_MACRO
   )
   write_basic_package_version_file (
-    LibFTDI1ConfigVersion.cmake 
-    VERSION ${LIBFTDI_VERSION_STRING} 
+    LibFTDI1ConfigVersion.cmake
+    VERSION ${LIBFTDI_VERSION_STRING}
     COMPATIBILITY AnyNewerVersion
   )
 endif ()
 
 
-install ( FILES 
+install ( FILES
             ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1Config.cmake
             ${CMAKE_CURRENT_BINARY_DIR}/LibFTDI1ConfigVersion.cmake
             cmake/UseLibFTDI1.cmake
@@ -240,7 +240,7 @@ install ( FILES
 include(CPack)
 
 message (STATUS "Summary of build options:
-
+  Build shared libs: ${SHAREDLIBS}
   Build static libs: ${STATICLIBS}
   Build C++ bindings: ${FTDIPP}
   Build Python bindings: ${PYTHON_BINDINGS}
